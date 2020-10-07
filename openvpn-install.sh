@@ -54,7 +54,7 @@ newclient () {
 	echo "<key>" >> /home/ubuntu/$1.ovpn
 	cat /etc/openvpn/server/easy-rsa/pki/private/$1.key >> /home/ubuntu/$1.ovpn
 	echo "</key>" >> /home/ubuntu/$1.ovpn
-	echo "<tls-auth>" >> ~/$1.ovpn
+	echo "<tls-auth>" >> /home/ubuntu/$1.ovpn
 	sed -ne '/BEGIN OpenVPN Static key/,$ p' /etc/openvpn/server/ta.key >> /home/ubuntu/$1.ovpn
 	echo "</tls-auth>" >> /home/ubuntu/$1.ovpn
 }
