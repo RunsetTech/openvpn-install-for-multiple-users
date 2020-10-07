@@ -76,18 +76,18 @@ else
 	echo "Listening to IPv4 Address."
 	# Autodetect IP address and pre-fill for the user
 	IP=$(ip addr | grep 'inet' | grep -v inet6 | grep -vE '127\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | grep -oE '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | head -1)
-	read -p "IP address: " -e -i $IP IP
+# 	read -p "IP address: " -e -i $IP IP
 	# If $IP is a private IP address, the server must be behind NAT
-	if echo "$IP" | grep -qE '^(10\.|172\.1[6789]\.|172\.2[0-9]\.|172\.3[01]\.|192\.168)'; then
-		echo
-		echo "Enter Public IPv4 Address"
-		read -p "Public IP Address: " -e PUBLICIP
-	fi
+# 	if echo "$IP" | grep -qE '^(10\.|172\.1[6789]\.|172\.2[0-9]\.|172\.3[01]\.|192\.168)'; then
+# 		echo
+# 		echo "Enter Public IPv4 Address"
+# 		read -p "Public IP Address: " -e PUBLICIP
+# 	fi
 	echo
 	echo "Choose OpenVPN Protocol (default UDP):"
 	echo "   1) UDP (recommended)"
 	echo "   2) TCP"
-	read -p "Protocol [1-2]: " -e -i 1 PROTOCOL
+# 	read -p "Protocol [1-2]: " -e -i 1 PROTOCOL
 	case $PROTOCOL in
 		1)
 		PROTOCOL=udp
@@ -98,7 +98,7 @@ else
 	esac
 	echo
 	echo "Enter OpenVPN Port (default 1194)"
-	read -p "Port: " -e -i 1194 PORT
+# 	read -p "Port: " -e -i 1194 PORT
 	echo
 	echo "Choose DNS for VPN (default System)"
 	echo "   1) Current system resolvers"
@@ -106,10 +106,10 @@ else
 	echo "   3) Google"
 	echo "   4) OpenDNS"
 	echo "   5) Verisign"
-	read -p "DNS [1-5]: " -e -i 1 DNS
+# 	read -p "DNS [1-5]: " -e -i 1 DNS
 	echo
 	echo "Enter the name Client Certificate (One Word)"
-	read -p "Client name: " -e -i client CLIENT
+# 	read -p "Client name: " -e -i client CLIENT
 	echo
 	echo "Please wait few minutes"
 # 	read -n1 -r -p "Press any key to continue..."
