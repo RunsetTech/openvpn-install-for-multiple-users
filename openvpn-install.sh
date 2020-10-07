@@ -44,19 +44,19 @@ fi
 
 newclient () {
 	# Generates the custom client.ovpn
-	cp /etc/openvpn/server/client-common.txt ~/$1.ovpn
-	echo "<ca>" >> ~/$1.ovpn
-	cat /etc/openvpn/server/easy-rsa/pki/ca.crt >> ~/$1.ovpn
-	echo "</ca>" >> ~/$1.ovpn
-	echo "<cert>" >> ~/$1.ovpn
-	sed -ne '/BEGIN CERTIFICATE/,$ p' /etc/openvpn/server/easy-rsa/pki/issued/$1.crt >> ~/$1.ovpn
-	echo "</cert>" >> ~/$1.ovpn
-	echo "<key>" >> ~/$1.ovpn
-	cat /etc/openvpn/server/easy-rsa/pki/private/$1.key >> ~/$1.ovpn
-	echo "</key>" >> ~/$1.ovpn
+	cp /etc/openvpn/server/client-common.txt /home/ubuntu/$1.ovpn
+	echo "<ca>" >> /home/ubuntu/$1.ovpn
+	cat /etc/openvpn/server/easy-rsa/pki/ca.crt >> /home/ubuntu/$1.ovpn
+	echo "</ca>" >> /home/ubuntu/$1.ovpn
+	echo "<cert>" >> /home/ubuntu/$1.ovpn
+	sed -ne '/BEGIN CERTIFICATE/,$ p' /etc/openvpn/server/easy-rsa/pki/issued/$1.crt >> /home/ubuntu/$1.ovpn
+	echo "</cert>" >> /home/ubuntu/$1.ovpn
+	echo "<key>" >> /home/ubuntu/$1.ovpn
+	cat /etc/openvpn/server/easy-rsa/pki/private/$1.key >> /home/ubuntu/$1.ovpn
+	echo "</key>" >> /home/ubuntu/$1.ovpn
 	echo "<tls-auth>" >> ~/$1.ovpn
-	sed -ne '/BEGIN OpenVPN Static key/,$ p' /etc/openvpn/server/ta.key >> ~/$1.ovpn
-	echo "</tls-auth>" >> ~/$1.ovpn
+	sed -ne '/BEGIN OpenVPN Static key/,$ p' /etc/openvpn/server/ta.key >> /home/ubuntu/$1.ovpn
+	echo "</tls-auth>" >> /home/ubuntu/$1.ovpn
 }
 
 if [[ -e /etc/openvpn/server/server.conf ]]; then
