@@ -225,25 +225,25 @@ crl-verify crl.pem" >> /etc/openvpn/server/server.conf
 		# We don't use --add-service=openvpn because that would only work with
 		# the default port and protocol.
 		firewall-cmd --add-port=$PORT/$PROTOCOL
-		firewall-cmd --zone=trusted --add-source=10.8.0.0/24
+		firewall-cmd --zone=trusted --add-source=10.8.0.0/8
 		firewall-cmd --permanent --add-port=$PORT/$PROTOCOL
-		firewall-cmd --permanent --zone=trusted --add-source=10.8.0.0/24
+		firewall-cmd --permanent --zone=trusted --add-source=10.8.0.0/8
 		# Set NAT for the VPN subnet
-		firewall-cmd --direct --add-rule ipv4 nat POSTROUTING 0 -s 10.8.0.0/24 ! -d 10.8.0.0/24 -j SNAT --to $IP
-		firewall-cmd --permanent --direct --add-rule ipv4 nat POSTROUTING 0 -s 10.8.0.0/24 ! -d 10.8.0.0/24 -j SNAT --to $IP
+		firewall-cmd --direct --add-rule ipv4 nat POSTROUTING 0 -s 10.8.0.0/8 ! -d 10.8.0.0/8 -j SNAT --to $IP
+		firewall-cmd --permanent --direct --add-rule ipv4 nat POSTROUTING 0 -s 10.8.0.0/8 ! -d 10.8.0.0/8 -j SNAT --to $IP
 	else
 		# Create a service to set up persistent iptables rules
 		echo "[Unit]
 Before=network.target
 [Service]
 Type=oneshot
-ExecStart=/sbin/iptables -t nat -A POSTROUTING -s 10.8.0.0/24 ! -d 10.8.0.0/24 -j SNAT --to $IP
+ExecStart=/sbin/iptables -t nat -A POSTROUTING -s 10.8.0.0/8 ! -d 10.8.0.0/8 -j SNAT --to $IP
 ExecStart=/sbin/iptables -I INPUT -p $PROTOCOL --dport $PORT -j ACCEPT
-ExecStart=/sbin/iptables -I FORWARD -s 10.8.0.0/24 -j ACCEPT
+ExecStart=/sbin/iptables -I FORWARD -s 10.8.0.0/8 -j ACCEPT
 ExecStart=/sbin/iptables -I FORWARD -m state --state RELATED,ESTABLISHED -j ACCEPT
-ExecStop=/sbin/iptables -t nat -D POSTROUTING -s 10.8.0.0/24 ! -d 10.8.0.0/24 -j SNAT --to $IP
+ExecStop=/sbin/iptables -t nat -D POSTROUTING -s 10.8.0.0/8 ! -d 10.8.0.0/8 -j SNAT --to $IP
 ExecStop=/sbin/iptables -D INPUT -p $PROTOCOL --dport $PORT -j ACCEPT
-ExecStop=/sbin/iptables -D FORWARD -s 10.8.0.0/24 -j ACCEPT
+ExecStop=/sbin/iptables -D FORWARD -s 10.8.0.0/8 -j ACCEPT
 ExecStop=/sbin/iptables -D FORWARD -m state --state RELATED,ESTABLISHED -j ACCEPT
 RemainAfterExit=yes
 [Install]
